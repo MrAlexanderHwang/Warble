@@ -6,6 +6,8 @@
       crossorigin="anonymous">
 
     </script>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 
@@ -28,14 +30,29 @@
       <div class="nav-wrapper">
         <a href="#" class="brand-logo center">Warble</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-          <li><a href="sass.html">Search</a></li>
+          <li><a href = "#!?"> <i class="material-icons">search</i></a></li>
           <li><a href="badges.html">My Account</a></li>
-          <li><a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">CC</i></a></li>
+          <li><a href="badges.html">Help</a></li>
+          <li><a href="badges.html">About</a></li>
+
         </ul>
       </div>
     </nav>
 
     <div class="container">
+
+      <ul class="collapsible" data-collapsible="accordion">
+        <li>
+          <div class="collapsible-header"><i class="material-icons"></i><b>Post a tweet</b></div>
+
+          <!-- This is the HTML form that appears in the browser -->
+          <form class="collapsible-body" action="<?=$_SERVER['PHP_SELF']?>" method="post">
+          	Tweet: <input type="text" name="country">
+            <input type="submit" name="submit" class="waves-effect waves-light btn">
+          </form>
+
+        </li>
+      </ul>
 	<?php
 
 	    // pass in some info;
@@ -74,14 +91,26 @@
     		// print them one after another
     		echo "<table cellpadding=50 border=1>";
     		while($row = mysqli_fetch_row($result)) {
-        		echo "<tr>";
+          //echo "</table>";
+          echo "<div class='row'>";
+          echo  "<div class='col s12 m5'>";
+          echo    "<div class='card-panel teal'>";
+          echo      "<span class='white-text'>$row[1]";
+          echo      "</span>";
+          echo    "</div>";
+          echo  "</div>";
+          echo "</div>";
+
+        /*
+            echo "<tr>";
 				echo "<td>".$row[0]."</td>";
         		echo "<td>" . $row[1]."</td>";
         		echo "<td>".$row[2]."</td>";
 				echo "<td><a href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
         		echo "</tr>";
+            */
+
     		}
-		    echo "</table>";
 
 		} else {
 
@@ -99,9 +128,9 @@
     	$animal = $_POST['animal'];
 
 		// check to see if user has entered anything
-		if ($animal != "") {
+		if ($country != "") {
 	 		// build SQL query
-			$query = "INSERT INTO symbols (country, animal) VALUES ('$country', '$animal')";
+			$query = "INSERT INTO symbols (country) VALUES ('$country')";
 			// run the query
      		$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
 			// refresh the page to show new update
@@ -129,33 +158,6 @@
 		mysqli_close($connection);
 
 	?>
-
-
-  <ul id="slide-out" class="side-nav">
-    <li><div class="userView">
-      <div class="background">
-        <img src="images/office.jpg">
-      </div>
-      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-      <a href="#!name"><span class="white-text name">John Doe</span></a>
-      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-    </div></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-  </ul>
-  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">Categories</i></a>
-
-
-    <!-- This is the HTML form that appears in the browser -->
-   	<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-    	Country: <input type="text" name="country">
-    	National animal: <input type="text" name="animal">
-    	<input type="submit" name="submit">
-    </form>
-    <form action="logout.php" method="post"><button>Log out</button></form>
 
   <script>
   $(function(){
