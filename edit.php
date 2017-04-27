@@ -26,29 +26,31 @@
 
 	<body>
 
+    <!-- This is the Navbar at the top of the screen -->
     <nav>
       <div class="nav-wrapper">
         <a href="#" class="brand-logo center">Warble</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-          <li><a href="badges.html">My Account</a></li>
-          <li><a href="badges.html">Help</a></li>
-          <li><a href="badges.html">About</a></li>
+          <!-- This is the search part of the navbar -->
           <li>
-            <form>
+            <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
               <div class="input-field">
-                <input id="search" type="search" required>
+                <input id="search" type="search" name="search">
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                 <i class="material-icons">close</i>
               </div>
             </form>
           </li>
+          <li><a href="badges.html">My Account</a></li>
+          <li><a href="badges.html">Help</a></li>
+          <li><a href="badges.html">About</a></li>
         </ul>
       </div>
     </nav>
 
 
+    <!-- This is the popup that lets you post a tweet -->
     <div class="container">
-
       <ul class="collapsible" data-collapsible="accordion">
         <li>
           <div class="collapsible-header"><i class="material-icons"></i><b>Post a tweet</b></div>
@@ -56,7 +58,9 @@
           <!-- This is the HTML form that appears in the browser -->
           <form class="collapsible-body" action="<?=$_SERVER['PHP_SELF']?>" method="post">
           	Tweet: <input type="text" name="country">
-            <input type="submit" name="submit" class="waves-effect waves-light btn">
+            <div class='input-field'>
+              <input type="submit" name="submit" class="waves-effect waves-light btn">
+            </div>
           </form>
 
         </li>
@@ -80,7 +84,7 @@
 
 		// To access $_SESSION['user'] values put in an array, show user his username
 		$arr = array_values($_SESSION['user']);
-
+    $search = $_POST['search'];
 		// open connection
 		$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
 
@@ -88,8 +92,12 @@
 		mysqli_select_db($connection, $dbname) or die ("Unable to select database!");
 
 		// create query
-		$query = "SELECT * FROM symbols";
-
+    if ($search != ""){
+		    $query = "SELECT * FROM symbols WHERE tweet_contents LIKE '%$search%' ORDER BY id DESC";
+    }
+    else{
+      $query = "SELECT * FROM symbols ORDER BY id DESC";
+    }
 		// execute query
 		$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
 
@@ -101,12 +109,18 @@
     		while($row = mysqli_fetch_row($result)) {
           //echo "</table>";
           echo "<div class='row'>";
-          echo  "<div class='col s12 m5'>";
+          echo  "<div class='col s12 m12'>";
           echo    "<div class='card-panel teal'>";
-          echo      "<span class='white-text'>$row[1]";
+          echo      "<span class='white-text'>$row[2]: \r\n $row[1]";
           echo      "</span>";
           echo    "</div>";
           echo  "</div>";
+          echo  "<ul class='collapsible s12 m12' data-collapsible='accordion'>";
+          echo    "<li>";
+          echo      "<div class='collapsible-header'><i class='material-icons'>filter_drama</i>Comment</div>";
+          echo      "<div class='collapsible-body'><span>Lorem ipsum dolor sit amet.</span></div>";
+          echo    "</li>";
+          echo  "</ul>";
           echo "</div>";
 
         /*
@@ -123,7 +137,7 @@
 		} else {
 
     		// print status message
-        echo "<script> Materialize.toast('Looks like there isnt anything new here', 6500); // 6500 is the duration of the toast </script>";
+        echo "<script> Materialize.toast('Looks like there isnt anything here', 6500); // 6500 is the duration of the toast </script>";
 		}
 
 
@@ -133,15 +147,21 @@
 
 		// set variable values to HTML form inputs
 		$country = $_POST['country'];
-    	$animal = $_POST['animal'];
+    $animal = $_POST['animal'];
+
 
 		// check to see if user has entered anything
 		if ($country != "") {
 	 		// build SQL query
-			$query = "INSERT INTO symbols (country) VALUES ('$country')";
+			$query = "INSERT INTO symbols (tweet_contents, username) VALUES ('$country','$arr[1]')";
+      //$query .= "INSERT INTO symbols (username) VALUES ('$arr[1]')";
+      //$query2 = "INSERT INTO symbols (username) VALUES ('$arr[1]')";
+
 			// run the query
-     		$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+     	$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+      //$result2 = mysqli_query($connection,$query2) or die ("Error in query: $query2. ".mysql_error());
 			// refresh the page to show new update
+
 	 		echo "<meta http-equiv='refresh' content='0'>";
 		}
 
