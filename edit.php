@@ -115,13 +115,26 @@
           echo      "</span>";
           echo    "</div>";
           echo  "</div>";
+
+
           echo  "<ul class='collapsible s12 m12' data-collapsible='accordion'>";
           echo    "<li>";
-          echo      "<div class='collapsible-header'><i class='material-icons'>filter_drama</i>Comment</div>";
-          echo      "<div class='collapsible-body'><span>Lorem ipsum dolor sit amet.</span></div>";
+          echo      "<div class='collapsible-header'><i class='material-icons'></i>Comment</div>";
+
+          echo      "<div class='collapsible-body'><span>";
+          echo       "<form class='collapsible-body'  method='post'>";
+          echo         "Comment: <input type='text' name='comment'>";
+          echo         "<div class='input-field'>";
+          echo        "</div>";
+          echo      "</form>";
+          echo          "<input type='submit' name='submit' class='waves-effect waves-light btn'>";
+          echo      "</span></div>";
           echo    "</li>";
           echo  "</ul>";
           echo "</div>";
+
+
+
 
         /*
             echo "<tr>";
@@ -170,10 +183,10 @@
 
 			// create query to delete record
 			echo $_SERVER['PHP_SELF'];
-    		$query = "DELETE FROM symbols WHERE id = ".$_GET['id'];
+    	$query = "DELETE FROM symbols WHERE id = ".$_GET['id'];
 
 			// run the query
-     		$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+     	$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
 
 			// reset the url to remove id $_GET variable
 			$location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
