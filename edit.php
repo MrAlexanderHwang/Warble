@@ -59,25 +59,6 @@
       </div>
     </nav>
 
-  <div class="slider ">
-    <ul class="slides ">
-      <li>
-        <img src="img/bird.jpg"> <!-- random image -->
-        <div class="caption center-align">
-          <h1>Warble</h1>
-          <h5 class="light grey-text text-lighten-3">(of a bird) sing softly and with a succession of constantly changing notes</h5>
-        </div>
-      </li>
-      <li>
-        <img src="img/bird.jpg"> <!-- random image -->
-        <div class="caption left-align">
-          <h3>Revolutionary Way of Communicating</h3>
-          <h5 class="light grey-text text-lighten-3">Share your ideas with yourself</h5>
-        </div>
-      </li>
-    </ul>
-  </div>
-
 
 
     <!-- This is the popup that lets you post a tweet -->
