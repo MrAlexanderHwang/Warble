@@ -38,7 +38,7 @@
 
     <!-- This is the Navbar at the top of the screen -->
     <nav>
-      <div class="nav-wrapper">
+      <div class="nav-wrapper teal accent-4">
         <a href="#" class="brand-logo center">Warble</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
           <!-- This is the search part of the navbar -->
@@ -132,7 +132,7 @@
           //echo "</table>";
           echo "<div class='row'>";
           echo  "<div class='col s12 m12'>";
-          echo    "<div class='card-panel teal'>";
+          echo    "<div class='card-panel teal accent-4'>";
           echo      "<span class='white-text'>$row[2]: \r\n $row[1]";
           echo      "</span>";
           echo    "</div>";
