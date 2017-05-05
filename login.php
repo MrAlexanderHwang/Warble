@@ -1,3 +1,30 @@
+<head>
+  <style>
+  html {
+    font-family: GillSans, sans-serif;
+    text-align: center;
+  }
+
+  </style>
+
+
+
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous">
+  </script>
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+
+
+</head>
+
 <?php
 
     // First we execute our common code to connection to the database and start the session
@@ -63,12 +90,17 @@
                 $check_password = hash('sha256', $check_password . $row['salt']);
             }
 
+
             if($check_password === $row['password'])
             {
                 // If they do, then we flip this to true
                 $login_ok = true;
             }
         }
+
+
+
+
 
         // If the user logged in successfully, then we send them to the private members-only page
         // Otherwise, we display a login failed message and show the login form again
@@ -89,14 +121,15 @@
             $_SESSION['user'] = $row;
 
             // Redirect the user to the private members-only page.
-            header("Location: edit.php");
+            //header("Location: edit.php");
+            echo "<script> location.href = 'edit.php'; </script>";
             die("Redirecting to: edit.php");
         }
         else
         {
             // Tell the user they failed
             //print("Login Failed.");
-            echo "<script>Materialize.toast('I am a toast!', 4000)</script>";
+            echo "<script>Materialize.toast('Login Failed', 4000);</script>";
             //echo "<script>alert('hello')</script>";
 
             // Show them their username again so all they have to do is enter a new
@@ -109,39 +142,16 @@
     }
 
 ?>
-<head>
-  <style>
-  html {
-    font-family: GillSans, sans-serif;
-    text-align: center;
-  }
-
-  </style>
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-
-  <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous">
-  </script>
-
-
-</head>
-
 <nav>
-  <div class="nav-wrapper grey darken-3 ">
-    <a href="#" class="brand-logo">Rettiwt</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="sass.html">Sass</a></li>
-      <li><a href="badges.html">Components</a></li>
-      <li><a href="collapsible.html">JavaScript</a></li>
+  <div class="nav-wrapper teal accent-4">
+    <a href="#" class="brand-logo center">Warble</a>
+    <ul id="nav-mobile" class="left hide-on-med-and-down">
+      <li><a href="help.html">Contact Us</a></li>
+      <li><a href="about.html">About</a></li>
     </ul>
   </div>
 </nav>
+
 
 <div class='container'>
   <h1>Login</h1>
@@ -153,7 +163,7 @@
       Password:<br />
       <input type="password" name="password" value="" />
       <br /><br />
-      <input class="waves-effect purple darken-1 waves-light btn" type="submit" value="Login" />
+      <input class="waves-effect orange waves-light btn" type="submit" value="Login" />
   </form>
   <a class="waves-effect grey darken-3 waves-light btn" href="register.php">Register</a>
 </div>
