@@ -16,20 +16,17 @@
 
 <script>  $(document).ready(function(){
     $('.materialboxed').materialbox();
-
         $(document).ready(function(){
       $('.slider').slider();
     });
-        
-  });
 
+  });
 </script>
 
   <script>
   $(document).ready(function(){
-    $('.modal').modal)();
+    $('.modal').modal();
   })
-
   </script>
 
   </head>
@@ -42,10 +39,11 @@
         <a href="#" class="brand-logo center">Warble</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
           <!-- This is the search part of the navbar -->
-          
+
           <li><a href="edit.php">Home</a></li>
           <li><a href="help.html">Contact Us</a></li>
           <li><a href="about.html">About</a></li>
+          <li><a href="logout.php">Log Out</a></li>
           <li>
             <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
               <div class="input-field">
@@ -103,14 +101,21 @@
     else{
       $query = "SELECT * FROM symbols ORDER BY id DESC";
     }
+
+
 		// execute query
 		$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
 		// see if any rows were returned
 		if (mysqli_num_rows($result) > 0) {
     		// print them one after another
+
     		echo "<table cellpadding=50 border=1>";
     		while($row = mysqli_fetch_row($result)) {
+
           //echo "</table>";
+          $comments_query = "SELECT * FROM comments WHERE join_id = $row[0]";
+          //echo "$row[0]";
+
           echo "<div class='row'>";
           echo  "<div class='col s12 m12'>";
           echo    "<div class='card-panel teal accent-4'>";
@@ -120,37 +125,65 @@
           echo  "</div>";
           echo  "<ul class='collapsible s12 m12' data-collapsible='accordion'>";
           echo    "<li>";
-          echo      "<div class='collapsible-header'><i class='material-icons'></i>Comment</div>";
+          echo      "<div class='collapsible-header'><i class='material-icons'></i>Comments</div>";
           echo      "<div class='collapsible-body'><span>";
-          echo       "<form class='collapsible-body'  method='post'>";
-          echo         "Comment: <input type='text' name='comment'>";
+
+          // comments below
+          $result_comments = mysqli_query($connection,$comments_query);
+
+          // list out comments in a loop
+            while($com = mysqli_fetch_row($result_comments)) {
+              if ($com[1] == $row[0]){
+                echo      "<span class='text'> $com[3]: $com[2] <br>";
+                echo      "</span>";
+                }
+          }
+
+
+          // form to post comment
+
+          echo      "<form class='collapsible-body'  method='post' id='$row[0]'>";
+          echo         "<input type='text' name='$row[0]'>";
           echo         "<div class='input-field'>";
-          echo        "</div>";
+
+          // below gets the join id to attatch the comment to the right post
+          $comment = $_POST[$row[0]];
+          if ($comment != "") {
+              echo "<script>console.log('comment-ran-past')</script>";
+              //echo '$arr[0], $arr[1], $arr[2]';
+              $query = "INSERT INTO comments (comment, user, join_id) VALUES ('$comment','$arr[1]', '$row[0]')";
+              //$query .= "INSERT INTO symbols (username) VALUES ('$arr[1]')";
+              //$query2 = "INSERT INTO symbols (username) VALUES ('$arr[1]')";
+              // run the query
+              $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+              //$result2 = mysqli_query($connection,$query2) or die ("Error in query: $query2. ".mysql_error());
+              // refresh the page to show new update
+              echo "<meta http-equiv='refresh' content='0'>";
+          }
+
+          // add end tags to the form
+          echo         "</div>";
           echo      "</form>";
-          echo          "<input type='submit' name='submit' class='waves-effect waves-light btn'>";
           echo      "</span></div>";
           echo    "</li>";
           echo  "</ul>";
           echo "</div>";
-        /*
-            echo "<tr>";
-				echo "<td>".$row[0]."</td>";
-        		echo "<td>" . $row[1]."</td>";
-        		echo "<td>".$row[2]."</td>";
-				echo "<td><a href=".$_SERVER['PHP_SELF']."?id=".$row[0].">Delete</a></td>";
-        		echo "</tr>";
-            */
+
+
     		}
 		} else {
     		// print status message
         echo "<script> Materialize.toast('Looks like there isnt anything here', 6500); // 6500 is the duration of the toast </script>";
 		}
 		// free result set memory
+
 		mysqli_free_result($connection,$result);
 		// set variable values to HTML form inputs
 		$country = $_POST['country'];
     $animal = $_POST['animal'];
-		// check to see if user has entered anything
+    $comment = $_POST['comment'];
+    echo "<script>console.log('$id hello');</script>";
+  		// check to see if user has entered anything
 		if ($country != "") {
 	 		// build SQL query
 			$query = "INSERT INTO symbols (tweet_contents, username) VALUES ('$country','$arr[1]')";
@@ -162,6 +195,24 @@
 			// refresh the page to show new update
 	 		echo "<meta http-equiv='refresh' content='0'>";
 		}
+
+
+    // if ($comment != "") {
+    //     echo "<script>console.log('comment-ran-past')</script>";
+    //     //echo '$arr[0], $arr[1], $arr[2]';
+    //     $query = "INSERT INTO comments (comment, user, join_id) VALUES ('$comment','$arr[1]', '$jid')";
+    //     //$query .= "INSERT INTO symbols (username) VALUES ('$arr[1]')";
+    //     //$query2 = "INSERT INTO symbols (username) VALUES ('$arr[1]')";
+    //     // run the query
+    //     $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+    //     //$result2 = mysqli_query($connection,$query2) or die ("Error in query: $query2. ".mysql_error());
+    //     // refresh the page to show new update
+    //     echo "<meta http-equiv='refresh' content='0'>";
+    // }
+
+
+
+
 		// if DELETE pressed, set an id, if id is set then delete it from DB
 		if (isset($_GET['id'])) {
 			// create query to delete record
