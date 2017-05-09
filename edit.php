@@ -19,7 +19,6 @@
         $(document).ready(function(){
       $('.slider').slider();
     });
-
   });
 </script>
 
@@ -31,7 +30,7 @@
 
   </head>
 
-	<body  style="background-color:rgba(249,249,249,1);">
+  <body  style="background-color:rgba(249,249,249,1);">
 
     <!-- This is the Navbar at the top of the screen -->
     <nav>
@@ -67,7 +66,7 @@
 
           <!-- This is the HTML form that appears in the browser -->
           <form class="collapsible-body" action="<?=$_SERVER['PHP_SELF']?>" method="post">
-          	Tweet: <input type="text" name="country">
+            Tweet: <input type="text" name="country">
             <div class='input-field'>
               <input type="submit" name="submit" class="waves-effect waves-light btn">
             </div>
@@ -75,62 +74,65 @@
 
         </li>
       </ul>
-	<?php
-	    // pass in some info;
-		require("common.php");
-		if(empty($_SESSION['user'])) {
-			// If they are not, we redirect them to the login page.
-			$location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
-			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-			//exit;
-        	// Remember that this die statement is absolutely critical.  Without it,
-        	// people can view your members-only content without logging in.
-        	die("Redirecting to login.php");
-    	}
-		// To access $_SESSION['user'] values put in an array, show user his username
-		$arr = array_values($_SESSION['user']);
+    
+  <?php
+      // pass in some info;
+    require("common.php");
+    if(empty($_SESSION['user'])) {
+      // If they are not, we redirect them to the login page.
+      $location = "http://" . $_SERVER['HTTP_HOST'] . "/login.php";
+      echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+      //exit;
+          // Remember that this die statement is absolutely critical.  Without it,
+          // people can view your members-only content without logging in.
+          die("Redirecting to login.php");
+      }
+    // To access $_SESSION['user'] values put in an array, show user his username
+    $arr = array_values($_SESSION['user']);
     $search = $_POST['search'];
-		// open connection
-		$connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
-		// select database
-		mysqli_select_db($connection, $dbname) or die ("Unable to select database!");
-		// create query
+    // open connection
+    $connection = mysqli_connect($host, $username, $password) or die ("Unable to connect!");
+    // select database
+    mysqli_select_db($connection, $dbname) or die ("Unable to select database!");
+    // create query
     if ($search != ""){
-		    $query = "SELECT * FROM symbols WHERE tweet_contents LIKE '%$search%' ORDER BY id DESC";
+        $query = "SELECT * FROM symbols WHERE tweet_contents LIKE '%$search%' ORDER BY id DESC";
     }
     else{
       $query = "SELECT * FROM symbols ORDER BY id DESC";
     }
+    // execute query
+    $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+    // see if any rows were returned
 
 
-		// execute query
-		$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
-		// see if any rows were returned
-		if (mysqli_num_rows($result) > 0) {
-    		// print them one after another
 
-    		echo "<table cellpadding=50 border=1>";
-    		while($row = mysqli_fetch_row($result)) {
 
+
+
+
+    if (mysqli_num_rows($result) > 0) {
+        // print them one after another
+        echo "<table cellpadding=50 border=1>";
+        while($row = mysqli_fetch_row($result)) {
           //echo "</table>";
           $comments_query = "SELECT * FROM comments WHERE join_id = $row[0]";
           //echo "$row[0]";
-
           echo "<div class='row'>";
           echo  "<div class='col s12 m12'>";
           echo    "<div class='card-panel teal accent-4'>";
-          echo      "<span class='white-text'>$row[2]: \r\n $row[1]";
-          echo      "</span>";
+          echo      "<span class='white-text'>$row[2]:  $row[1] </span>";
+          echo    "<div class='right-align'>";
+          echo      "<span class='white-text right-align'>$row[3]</span>";
+          echo    "</div>";
           echo    "</div>";
           echo  "</div>";
           echo  "<ul class='collapsible s12 m12' data-collapsible='accordion'>";
           echo    "<li>";
           echo      "<div class='collapsible-header'><i class='material-icons'></i>Comments</div>";
           echo      "<div class='collapsible-body'><span>";
-
           // comments below
           $result_comments = mysqli_query($connection,$comments_query);
-
           // list out comments in a loop
             while($com = mysqli_fetch_row($result_comments)) {
               if ($com[1] == $row[0]){
@@ -138,14 +140,10 @@
                 echo      "</span>";
                 }
           }
-
-
           // form to post comment
-
           echo      "<form class='collapsible-body'  method='post' id='$row[0]'>";
           echo         "<input type='text' name='$row[0]'>";
           echo         "<div class='input-field'>";
-
           // below gets the join id to attatch the comment to the right post
           $comment = $_POST[$row[0]];
           if ($comment != "") {
@@ -160,7 +158,6 @@
               // refresh the page to show new update
               echo "<meta http-equiv='refresh' content='0'>";
           }
-
           // add end tags to the form
           echo         "</div>";
           echo      "</form>";
@@ -168,33 +165,41 @@
           echo    "</li>";
           echo  "</ul>";
           echo "</div>";
-
-
-    		}
-		} else {
-    		// print status message
+        }
+    } else {
+        // print status message
         echo "<script> Materialize.toast('Looks like there isnt anything here', 6500); // 6500 is the duration of the toast </script>";
-		}
-		// free result set memory
-
-		mysqli_free_result($connection,$result);
-		// set variable values to HTML form inputs
-		$country = $_POST['country'];
+    }
+    // free result set memory
+    mysqli_free_result($connection,$result);
+    // set variable values to HTML form inputs
+    $country = $_POST['country'];
     $animal = $_POST['animal'];
     $comment = $_POST['comment'];
     echo "<script>console.log('$id hello');</script>";
-  		// check to see if user has entered anything
-		if ($country != "") {
-	 		// build SQL query
-			$query = "INSERT INTO symbols (tweet_contents, username) VALUES ('$country','$arr[1]')";
+
+
+
+
+
+
+      // check to see if user has entered anything
+    if ($country != "") {
+      // build SQL query
+      date_default_timezone_set("America/New_York");
+      $timedate = date("F j, Y")." at ".date("g:i a");
+      $query = "INSERT INTO symbols (tweet_contents, username, timedate) VALUES ('$country','$arr[1]', '$timedate')";
       //$query .= "INSERT INTO symbols (username) VALUES ('$arr[1]')";
       //$query2 = "INSERT INTO symbols (username) VALUES ('$arr[1]')";
-			// run the query
-     	$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+      // run the query
+      $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
       //$result2 = mysqli_query($connection,$query2) or die ("Error in query: $query2. ".mysql_error());
-			// refresh the page to show new update
-	 		echo "<meta http-equiv='refresh' content='0'>";
-		}
+      // refresh the page to show new update
+      echo "<meta http-equiv='refresh' content='0'>";
+    }
+
+
+
 
 
     // if ($comment != "") {
@@ -213,21 +218,23 @@
 
 
 
-		// if DELETE pressed, set an id, if id is set then delete it from DB
-		if (isset($_GET['id'])) {
-			// create query to delete record
-			echo $_SERVER['PHP_SELF'];
-    	$query = "DELETE FROM symbols WHERE id = ".$_GET['id'];
-			// run the query
-     	$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
-			// reset the url to remove id $_GET variable
-			$location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-			exit;
-		}
-		// close connection
-		mysqli_close($connection);
-	?>
+
+
+    // if DELETE pressed, set an id, if id is set then delete it from DB
+    if (isset($_GET['id'])) {
+      // create query to delete record
+      echo $_SERVER['PHP_SELF'];
+      $query = "DELETE FROM symbols WHERE id = ".$_GET['id'];
+      // run the query
+      $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+      // reset the url to remove id $_GET variable
+      $location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+      echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+      exit;
+    }
+    // close connection
+    mysqli_close($connection);
+  ?>
 
   <script>
   $(function(){
@@ -235,5 +242,6 @@
   })
   </script>
    </div>
-	</body>
+  </body>
+
 </html>
