@@ -74,7 +74,7 @@
 
         </li>
       </ul>
-    
+
   <?php
       // pass in some info;
     require("common.php");
@@ -104,13 +104,6 @@
     // execute query
     $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
     // see if any rows were returned
-
-
-
-
-
-
-
     if (mysqli_num_rows($result) > 0) {
         // print them one after another
         echo "<table cellpadding=50 border=1>";
@@ -124,6 +117,9 @@
           echo      "<span class='white-text'>$row[2]:  $row[1] </span>";
           echo    "<div class='right-align'>";
           echo      "<span class='white-text right-align'>$row[3]</span>";
+          if ($row[2] == $arr[1]){
+            echo "<a href=".$_SERVER['PHP_SELF']."?id=".$row[0]." class='btn-flat btn-small waves-effect waves-light teal accent-4'><i class='material-icons white-text'>delete</i></a>";
+          }
           echo    "</div>";
           echo    "</div>";
           echo  "</div>";
@@ -176,12 +172,6 @@
     $country = $_POST['country'];
     $animal = $_POST['animal'];
     $comment = $_POST['comment'];
-    echo "<script>console.log('$id hello');</script>";
-
-
-
-
-
 
       // check to see if user has entered anything
     if ($country != "") {
@@ -198,10 +188,22 @@
       echo "<meta http-equiv='refresh' content='0'>";
     }
 
+    // if DELETE pressed, set an id, if id is set then delete it from DB
+		if (isset($_GET['id'])) {
 
+			// create query to delete record
+			echo $_SERVER['PHP_SELF'];
+    		$query = "DELETE FROM symbols WHERE id = ".$_GET['id'];
 
+			// run the query
+     		$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
 
+			// reset the url to remove id $_GET variable
+			$location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+			exit;
 
+		}
     // if ($comment != "") {
     //     echo "<script>console.log('comment-ran-past')</script>";
     //     //echo '$arr[0], $arr[1], $arr[2]';
@@ -214,12 +216,6 @@
     //     // refresh the page to show new update
     //     echo "<meta http-equiv='refresh' content='0'>";
     // }
-
-
-
-
-
-
     // if DELETE pressed, set an id, if id is set then delete it from DB
     if (isset($_GET['id'])) {
       // create query to delete record
