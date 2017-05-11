@@ -6,28 +6,28 @@
       crossorigin="anonymous">
     </script>
 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 
   <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 
 
-  <script>  
-    $(document).ready(function(){
-      $('.materialboxed').materialbox();
+    <script>  
       $(document).ready(function(){
-        $('.slider').slider();
+        $('.materialboxed').materialbox();
+        $(document).ready(function(){
+          $('.slider').slider();
+        });
       });
-    });
-  </script>
+    </script>
 
-  <script>
-    $(document).ready(function(){
-      $('.modal').modal();
-    })
-  </script>
+    <script>
+      $(document).ready(function(){
+        $('.modal').modal();
+      })
+    </script>
 
   </head>
 
@@ -55,7 +55,6 @@
       </ul>
     </div>
   </nav>
-
 
     <!-- This is the popup that lets you post a tweet -->
     <div class="container">
