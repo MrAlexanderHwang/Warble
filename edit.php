@@ -14,18 +14,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 
 
-  <script>  $(document).ready(function(){
+  <script>  
+    $(document).ready(function(){
       $('.materialboxed').materialbox();
-          $(document).ready(function(){
+      $(document).ready(function(){
         $('.slider').slider();
       });
     });
   </script>
 
   <script>
-  $(document).ready(function(){
-    $('.modal').modal();
-  })
+    $(document).ready(function(){
+      $('.modal').modal();
+    })
   </script>
 
   </head>
@@ -33,29 +34,27 @@
   <body  style="background-color:rgba(249,249,249,1);">
 
     <!-- This is the Navbar at the top of the screen -->
-    <nav>
-      <div class="nav-wrapper teal accent-4">
-        <a href="#" class="brand-logo center">Warble</a>
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
+  <nav>
+    <div class="nav-wrapper teal accent-4">
+      <a href="#" class="brand-logo center">Warble</a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
           <!-- This is the search part of the navbar -->
-
-          <li><a href="edit.php">Home</a></li>
-          <li><a href="help.html">Contact Us</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="logout.php">Log Out</a></li>
-          <li>
-            <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-              <div class="input-field">
-                <input id="search" type="search" name="search">
-                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                <i class="material-icons">close</i>
-              </div>
-            </form>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
+        <li><a href="edit.php">Home</a></li>
+        <li><a href="help.html">Contact Us</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="logout.php">Log Out</a></li>
+        <li>
+          <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+            <div class="input-field">
+              <input id="search" type="search" name="search">
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
 
     <!-- This is the popup that lets you post a tweet -->
