@@ -34,42 +34,42 @@
   <body  style="background-color:rgba(249,249,249,1);">
 
     <!-- This is the Navbar at the top of the screen -->
-  <nav>
-    <div class="nav-wrapper teal accent-4">
-      <a href="#" class="brand-logo center">Warble</a>
-      <ul id="nav-mobile" class="left hide-on-med-and-down">
+    <nav>
+      <div class="nav-wrapper teal accent-4">
+        <a href="#" class="brand-logo center">Warble</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
           <!-- This is the search part of the navbar -->
-        <li><a href="edit.php">Home</a></li>
-        <li><a href="help.html">Contact Us</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="logout.php">Log Out</a></li>
-        <li>
-          <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-            <div class="input-field">
-              <input id="search" type="search" name="search">
-              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-              <i class="material-icons">close</i>
-            </div>
-          </form>
-        </li>
-      </ul>
-    </div>
-  </nav>
+          <li><a href="edit.php">Home</a></li>
+          <li><a href="help.html">Contact Us</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="logout.php">Log Out</a></li>
+          <li>
+            <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+              <div class="input-field">
+                <input id="search" type="search" name="search">
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
+              </div>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
 
     <!-- This is the popup that lets you post a tweet -->
     <div class="container">
       <ul class="collapsible" >
         <li>
           <div class="collapsible-header"><b>Post a Warble</b></div>
-
-          <!-- This is the HTML form that appears in the browser -->
-          <form class="collapsible-body" action="<?=$_SERVER['PHP_SELF']?>" method="post">
-            Warble: <input type="text" name="country">
-            <div class='input-field'>
-              <input type="submit" name="submit" class="waves-effect waves-light btn">
-            </div>
-          </form>
-
+            <!-- This is the HTML form that appears in the browser -->
+            <form class="collapsible-body" action="<?=$_SERVER['PHP_SELF']?>" method="post">
+              Warble: <input type="text" name="country">
+              <div class='input-field'>
+                <input type="submit" name="submit" class="waves-effect waves-light btn">
+              </div>
+            </form>
         </li>
       </ul>
 
@@ -120,7 +120,6 @@
           $num_likes = mysqli_query($connection,$likes_query);
           $likes = mysqli_fetch_row($num_likes);
           $likes = $likes[0];
-
           echo      "<a href=".$_SERVER['PHP_SELF']."?like=".$row[0]." class='btn-flat btn-small waves-effect waves-light teal accent-4 white-text'><i class='material-icons white-text'>thumb_up</i>$likes</a>";
           // delete button
           if ($row[2] == $arr[1]){
@@ -180,13 +179,10 @@
     // use entites to make them XSS proof
     $country = $_POST['country'];
     $country = htmlspecialchars($country);
-
     $animal = $_POST['animal'];
     $animal = htmlspecialchars($animal);
-
     $comment = $_POST['comment'];
     $comment = htmlspecialchars($comment);
-
       // check to see if user has entered anything
     if ($country != "") {
       // build SQL query
@@ -201,23 +197,18 @@
       // refresh the page to show new update
       echo "<meta http-equiv='refresh' content='0'>";
     }
-
     // if DELETE pressed, set an id, if id is set then delete it from DB
-		if (isset($_GET['id'])) {
-
-			// create query to delete record
-			echo $_SERVER['PHP_SELF'];
-    		$query = "DELETE FROM symbols WHERE id = ".$_GET['id'];
-
-			// run the query
-     		$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
-
-			// reset the url to remove id $_GET variable
-			$location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-			exit;
-
-		}
+    if (isset($_GET['id'])) {
+      // create query to delete record
+      echo $_SERVER['PHP_SELF'];
+        $query = "DELETE FROM symbols WHERE id = ".$_GET['id'];
+      // run the query
+        $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+      // reset the url to remove id $_GET variable
+      $location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+      echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+      exit;
+    }
     // if ($comment != "") {
     //     echo "<script>console.log('comment-ran-past')</script>";
     //     //echo '$arr[0], $arr[1], $arr[2]';
@@ -242,17 +233,13 @@
       echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
       exit;
     }
-
     if (isset($_GET['like'])) {
       $id = $_GET['like'];
-
       // make only one like per person
       $comment_query = "SELECT Count(join_id) AS num_ls FROM likes WHERE join_id=$id AND profile = '$arr[1]'";
       $num_likes = mysqli_query($connection,$comment_query);
       $likes = mysqli_fetch_row($num_likes);
       $likes = $likes[0];
-
-
       if ($likes == 0){
         // create query to delete record
         echo $_SERVER['PHP_SELF'];
@@ -265,17 +252,16 @@
         exit;
       }
     }
-
     // close connection
     mysqli_close($connection);
   ?>
 
-  <script>
-  $(function(){
-    $(".button-collapse").sideNav();
-  })
-  </script>
-   </div>
-  </body>
+      <script>
+        $(function(){
+          $(".button-collapse").sideNav();
+        })
+      </script>
 
+    </div>
+  </body>
 </html>
