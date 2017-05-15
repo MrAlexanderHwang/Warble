@@ -6,28 +6,27 @@
       crossorigin="anonymous">
     </script>
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 
   <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 
 
-    <script>  
-      $(document).ready(function(){
-        $('.materialboxed').materialbox();
-        $(document).ready(function(){
-          $('.slider').slider();
-        });
+  <script>  $(document).ready(function(){
+      $('.materialboxed').materialbox();
+          $(document).ready(function(){
+        $('.slider').slider();
       });
-    </script>
+    });
+  </script>
 
-    <script>
-      $(document).ready(function(){
-        $('.modal').modal();
-      })
-    </script>
+  <script>
+  $(document).ready(function(){
+    $('.modal').modal();
+  })
+  </script>
 
   </head>
 
@@ -38,7 +37,9 @@
       <div class="nav-wrapper teal accent-4">
         <a href="#" class="brand-logo center">Warble</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
+
           <!-- This is the search part of the navbar -->
+
           <li><a href="edit.php">Home</a></li>
           <li><a href="help.html">Contact Us</a></li>
           <li><a href="about.html">About</a></li>
@@ -63,13 +64,15 @@
       <ul class="collapsible" >
         <li>
           <div class="collapsible-header"><b>Post a Warble</b></div>
-            <!-- This is the HTML form that appears in the browser -->
-            <form class="collapsible-body" action="<?=$_SERVER['PHP_SELF']?>" method="post">
-              Warble: <input type="text" name="country">
-              <div class='input-field'>
-                <input type="submit" name="submit" class="waves-effect waves-light btn">
-              </div>
-            </form>
+
+          <!-- This is the HTML form that appears in the browser -->
+          <form class="collapsible-body" action="<?=$_SERVER['PHP_SELF']?>" method="post">
+            Warble: <input type="text" name="country">
+            <div class='input-field'>
+              <input type="submit" name="submit" class="waves-effect waves-light btn">
+            </div>
+          </form>
+
         </li>
       </ul>
 
@@ -94,7 +97,7 @@
     mysqli_select_db($connection, $dbname) or die ("Unable to select database!");
     // create query
     if ($search != ""){
-        $query = "SELECT * FROM symbols WHERE tweet_contents LIKE '%$search%' ORDER BY id DESC";
+        $query = "SELECT * FROM symbols WHERE tweet_contents LIKE '%$search%' OR username LIKE '%$search%' ORDER BY id DESC";
     }
     else{
       $query = "SELECT * FROM symbols ORDER BY id DESC";
@@ -102,6 +105,9 @@
     // execute query
     $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
     // see if any rows were returned
+
+
+
     if (mysqli_num_rows($result) > 0) {
         // print them one after another
         echo "<table cellpadding=50 border=1>";
@@ -120,6 +126,7 @@
           $num_likes = mysqli_query($connection,$likes_query);
           $likes = mysqli_fetch_row($num_likes);
           $likes = $likes[0];
+
           echo      "<a href=".$_SERVER['PHP_SELF']."?like=".$row[0]." class='btn-flat btn-small waves-effect waves-light teal accent-4 white-text'><i class='material-icons white-text'>thumb_up</i>$likes</a>";
           // delete button
           if ($row[2] == $arr[1]){
@@ -179,10 +186,13 @@
     // use entites to make them XSS proof
     $country = $_POST['country'];
     $country = htmlspecialchars($country);
+
     $animal = $_POST['animal'];
     $animal = htmlspecialchars($animal);
+
     $comment = $_POST['comment'];
     $comment = htmlspecialchars($comment);
+
       // check to see if user has entered anything
     if ($country != "") {
       // build SQL query
@@ -197,18 +207,23 @@
       // refresh the page to show new update
       echo "<meta http-equiv='refresh' content='0'>";
     }
+
     // if DELETE pressed, set an id, if id is set then delete it from DB
-    if (isset($_GET['id'])) {
-      // create query to delete record
-      echo $_SERVER['PHP_SELF'];
-        $query = "DELETE FROM symbols WHERE id = ".$_GET['id'];
-      // run the query
-        $result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
-      // reset the url to remove id $_GET variable
-      $location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-      echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
-      exit;
-    }
+		if (isset($_GET['id'])) {
+
+			// create query to delete record
+			echo $_SERVER['PHP_SELF'];
+    		$query = "DELETE FROM symbols WHERE id = ".$_GET['id'];
+
+			// run the query
+     		$result = mysqli_query($connection,$query) or die ("Error in query: $query. ".mysql_error());
+
+			// reset the url to remove id $_GET variable
+			$location = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+			echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
+			exit;
+
+		}
     // if ($comment != "") {
     //     echo "<script>console.log('comment-ran-past')</script>";
     //     //echo '$arr[0], $arr[1], $arr[2]';
@@ -233,13 +248,17 @@
       echo '<META HTTP-EQUIV="refresh" CONTENT="0;URL='.$location.'">';
       exit;
     }
+
     if (isset($_GET['like'])) {
       $id = $_GET['like'];
+
       // make only one like per person
       $comment_query = "SELECT Count(join_id) AS num_ls FROM likes WHERE join_id=$id AND profile = '$arr[1]'";
       $num_likes = mysqli_query($connection,$comment_query);
       $likes = mysqli_fetch_row($num_likes);
       $likes = $likes[0];
+
+
       if ($likes == 0){
         // create query to delete record
         echo $_SERVER['PHP_SELF'];
@@ -252,16 +271,17 @@
         exit;
       }
     }
+
     // close connection
     mysqli_close($connection);
   ?>
 
-      <script>
-        $(function(){
-          $(".button-collapse").sideNav();
-        })
-      </script>
-
-    </div>
+  <script>
+  $(function(){
+    $(".button-collapse").sideNav();
+  })
+  </script>
+   </div>
   </body>
+
 </html>
