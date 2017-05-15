@@ -126,6 +126,10 @@
           $num_likes = mysqli_query($connection,$likes_query);
           $likes = mysqli_fetch_row($num_likes);
           $likes = $likes[0];
+          $num_comments_query = "SELECT Count(*) FROM comments WHERE join_id = $row[0]";
+          $num_comments = mysqli_query($connection,$num_comments_query);
+          $coms = mysqli_fetch_row($num_comments);
+          $num_comments = $coms[0];
 
           echo      "<a href=".$_SERVER['PHP_SELF']."?like=".$row[0]." class='btn-flat btn-small waves-effect waves-light teal accent-4 white-text'><i class='material-icons white-text'>thumb_up</i>$likes</a>";
           // delete button
@@ -137,7 +141,7 @@
           echo  "</div>";
           echo  "<ul class='collapsible s12 m12' data-collapsible='accordion'>";
           echo    "<li>";
-          echo      "<div class='collapsible-header'><i class='material-icons'>comment</i>Comments</div>";
+          echo      "<div class='collapsible-header'><i class='material-icons'>comment</i>Comments ($num_comments)</div>";
           echo      "<div class='collapsible-body'><span>";
           // comments below
           $result_comments = mysqli_query($connection,$comments_query);
