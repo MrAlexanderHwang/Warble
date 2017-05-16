@@ -212,6 +212,7 @@
 
 
 </head>
+<body style="background-color:rgba(249,249,249,1);">
 <nav>
   <div class="nav-wrapper teal accent-4">
     <a href="#" class="brand-logo center">Warble</a>
@@ -238,3 +239,4 @@
 
   </form>
 </div>
+</body>
