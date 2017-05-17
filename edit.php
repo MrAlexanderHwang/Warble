@@ -21,13 +21,11 @@
           $('.slider').slider();
         });
       });
-
         // Initialize collapse button
   $(".button-collapse").sideNav();
   // Initialize collapsible (uncomment the line below if you use the dropdown variation)
   //$('.collapsible').collapsible();
         
-
     </script>
 
     <script>
@@ -35,14 +33,20 @@
         $('.modal').modal();
       })
     </script>
+    <style>
+.fixed {
+  position: fixed;
+  z-index: 5;
+}
 
+    </style>
 
   </head>
 
   <body  style="background-color:rgba(249,249,249,1);">
 
     <!-- This is the Navbar at the top of the screen -->
-    <nav>
+    <nav class ="fixed">
       <div class="nav-wrapper teal accent-4">
         <a href="#" class="brand-logo center">Warble</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
@@ -66,14 +70,16 @@
     </nav>
 
 <br></br>
+<br></br>
 
 
 
 
     <!-- This is the popup that lets you post a tweet -->
     <div class="container">
-      <ul class="collapsible" >
+      <ul class="collapsible popout"  >
         <li>
+        
           <div class="collapsible-header center-align "><b>Post a Warble</b></div>
 
           <!-- This is the HTML form that appears in the browser -->
@@ -86,6 +92,7 @@
 
         </li>
       </ul>
+
 
   <?php
       // pass in some info;
@@ -274,12 +281,18 @@
     mysqli_close($connection);
   ?>
 
+
+
   <script>
   $(function(){
     $(".button-collapse").sideNav();
   })
   </script>
-   </div>
+
+
+  </div>
+  
+
   </body>
 
 </html>
