@@ -85,7 +85,7 @@
   <div id="modal69" class="modal">
           <form class="modal-content" action="<?=$_SERVER['PHP_SELF']?>" method="post">
             <h1><center>What would <b>you</b> like to </u><b class="orange-text">Warble</b></u> about?</center></h1>
- <input type="text" name="country">
+ <input placeholder="Type your warble here!" type="text" name="country">
                 <div class="modal-footer" >
             <div class='input-field'>
               <button type="submit" name="Warble" class="waves-effect waves-light btn orange">Warble</button>
