@@ -46,6 +46,8 @@
     left: 95%;
     top: 90%;
 }
+
+
     </style>
 
   </head>
@@ -162,7 +164,7 @@
           echo    "</div>";
           echo    "</div>";
           echo  "</div>";
-          echo  "<ul class='collapsible s12 m12' data-collapsible='accordion'>";
+          echo  "<ul class='collapsible s12 m12 z-depth-3' data-collapsible='accordion'>";
           echo    "<li>";
           echo      "<div class='collapsible-header'><i class='material-icons'>comment</i>Comments ($num_comments)</div>";
           echo      "<div class='collapsible-body'><span>";
