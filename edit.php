@@ -21,6 +21,13 @@
           $('.slider').slider();
         });
       });
+
+        // Initialize collapse button
+  $(".button-collapse").sideNav();
+  // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+  //$('.collapsible').collapsible();
+        
+
     </script>
 
     <script>
@@ -58,6 +65,8 @@
       </div>
     </nav>
 
+<br></br>
+
 
 
 
@@ -65,7 +74,7 @@
     <div class="container">
       <ul class="collapsible" >
         <li>
-          <div class="collapsible-header"><b>Post a Warble</b></div>
+          <div class="collapsible-header center-align "><b>Post a Warble</b></div>
 
           <!-- This is the HTML form that appears in the browser -->
           <form class="collapsible-body" action="<?=$_SERVER['PHP_SELF']?>" method="post">
