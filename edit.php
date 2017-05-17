@@ -21,6 +21,8 @@
           $('.slider').slider();
         });
       });
+
+
         // Initialize collapse button
   $(".button-collapse").sideNav();
   // Initialize collapsible (uncomment the line below if you use the dropdown variation)
@@ -39,11 +41,16 @@
   z-index: 5;
 }
 
+.custombtn {
+    position: fixed;
+    left: 95%;
+    top: 90%;
+}
     </style>
 
   </head>
 
-  <body  style="background-color:rgba(249,249,249,1);">
+  <body  style="background-color:rgba(255,249,249,1);">
 
     <!-- This is the Navbar at the top of the screen -->
     <nav class ="fixed">
@@ -72,26 +79,28 @@
 <br></br>
 <br></br>
 
+<a class="btn-floating btn-large waves-effect waves-light orange custombtn" href="#modal69"><i class="large material-icons">mode_edit</i></a>
 
+  <!-- Modal Structure -->
+  <div id="modal69" class="modal">
+          <form class="modal-content" action="<?=$_SERVER['PHP_SELF']?>" method="post">
+            <h1><center>What would <b>you</b> like to </u><b class="orange-text">Warble</b></u> about?</center></h1>
+ <input type="text" name="country">
+                <div class="modal-footer" >
+            <div class='input-field'>
+              <button type="submit" name="Warble" class="waves-effect waves-light btn orange">Warble</button>
+            </div>
+                </div>
+          </form>
 
+      
+
+  </div>
+          
 
     <!-- This is the popup that lets you post a tweet -->
     <div class="container">
-      <ul class="collapsible popout"  >
-        <li>
-        
-          <div class="collapsible-header center-align "><b>Post a Warble</b></div>
 
-          <!-- This is the HTML form that appears in the browser -->
-          <form class="collapsible-body" action="<?=$_SERVER['PHP_SELF']?>" method="post">
-            Warble: <input type="text" name="country">
-            <div class='input-field'>
-              <input type="submit" name="submit" class="waves-effect waves-light btn">
-            </div>
-          </form>
-
-        </li>
-      </ul>
 
 
   <?php
@@ -145,7 +154,7 @@
           $num_comments = mysqli_query($connection,$num_comments_query);
           $coms = mysqli_fetch_row($num_comments);
           $num_comments = $coms[0];
-          echo      "<a href=".$_SERVER['PHP_SELF']."?like=".$row[0]." class='btn-flat btn-small waves-effect waves-light teal accent-4 white-text'><i class='material-icons white-text'>thumb_up</i>$likes</a>";
+          echo      "<a href=".$_SERVER['PHP_SELF']."?like=".$row[0]." class='btn-flat btn-small waves-effect waves-light  white-text'><i class='material-icons white-text'>thumb_up</i>$likes</a>";
           // delete button
           if ($row[2] == $arr[1]){
             echo "<a href=".$_SERVER['PHP_SELF']."?id=".$row[0]." class='btn-flat btn-small waves-effect waves-light teal accent-4'><i class='material-icons white-text'>delete</i></a>";
