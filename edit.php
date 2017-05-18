@@ -143,7 +143,7 @@
 
           echo "<div id='$row[2]' class='modal'>
                   <div class='modal-content'>
-                    <h4> @ $row[2]'s posts </h4>";
+                    <h4> <b class='orange-text'>@$row[2]'s</b><b> posts</b></h4>";
           $prof_query = "SELECT * FROM symbols WHERE username = '$row[2]' ORDER BY id DESC";
           $prof_result = mysqli_query($connection,$prof_query);
           while($p_res_li = mysqli_fetch_row($prof_result)) {
