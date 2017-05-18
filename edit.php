@@ -14,20 +14,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 
 
-    <script>  
+    <script>
       $(document).ready(function(){
         $('.materialboxed').materialbox();
         $(document).ready(function(){
           $('.slider').slider();
         });
       });
-
-
         // Initialize collapse button
   $(".button-collapse").sideNav();
   // Initialize collapsible (uncomment the line below if you use the dropdown variation)
   //$('.collapsible').collapsible();
-        
+
     </script>
 
     <script>
@@ -40,14 +38,11 @@
   position: fixed;
   z-index: 5;
 }
-
 .custombtn {
     position: fixed;
     left: 95%;
     top: 90%;
 }
-
-
     </style>
 
   </head>
@@ -61,7 +56,7 @@
         <ul id="nav-mobile" class="left hide-on-med-and-down">
           <!-- This is the search part of the navbar -->
           <li><a href="edit.php">Home</a></li>
-                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="faq.html">Help</a></li>
           <li><a href="help.html">Contact Us</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="logout.php">Log Out</a></li>
@@ -95,10 +90,10 @@
                 </div>
           </form>
 
-      
+
 
   </div>
-          
+
 
     <!-- This is the popup that lets you post a tweet -->
     <div class="container">
@@ -144,7 +139,25 @@
           echo "<div class='row'>";
           echo  "<div class='col s12 m12'>";
           echo    "<div class='card-panel teal accent-4'>";
-          echo      "<span class='white-text'><h5>@$row[2]:</h5> $row[1] </span>";
+
+
+          echo "<div id='$row[2]' class='modal'>
+                  <div class='modal-content'>
+                    <h4> @ $row[2]'s posts </h4>";
+          $prof_query = "SELECT * FROM symbols WHERE username = '$row[2]' ORDER BY id DESC";
+          $prof_result = mysqli_query($connection,$prof_query);
+          while($p_res_li = mysqli_fetch_row($prof_result)) {
+            echo "<p> @$p_res_li[2]: $p_res_li[1]</p>";
+          }
+
+          echo    "</div>";
+          echo    '<div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Done</a>
+                  </div>
+               </div>';
+
+
+          echo    "<span class='white-text'><h5> <a id ='$row[2]' name='prof_click' type='submit' href='#$row[2]' style='color: rgb(255,255,255)'>@$row[2]</a>:</h5> $row[1] </span>";
           echo    "<div class='right-align'>";
           echo      "<span class='white-text right-align'>$row[3]</span>";
           // likes and button below
@@ -302,7 +315,7 @@
 
 
   </div>
-  
+
 
   </body>
 
